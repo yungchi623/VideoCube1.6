@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="原始程式檔">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="標頭檔">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="資源檔">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="DataSources">
+      <UniqueIdentifier>{4ca5e574-a701-4962-9a34-c24ffe713fed}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="CountRank.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Ctreeview.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="Cube.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameSequenceToCubes.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="HistogramOfOrientedGradients.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="HumanRegionDetection.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="KthNearestNeighbor.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="VBGHTSimular.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="VideoCube1.0.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+    <ClCompile Include="VolumeBasedGHT.cpp">
+      <Filter>原始程式檔</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="CountRank.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Ctreeview.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Cube.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="Form1.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameSequenceToCubes.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="HumanRegionDetection.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="KthNearestNeighbor.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="VBGHTSimular.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+    <ClInclude Include="VolumeBasedGHT.h">
+      <Filter>標頭檔</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico">
+      <Filter>資源檔</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc">
+      <Filter>資源檔</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="System.Data.DataSet.datasource">
+      <Filter>DataSources</Filter>
+    </None>
+    <None Include="System.Xml.XmlEntity.datasource">
+      <Filter>DataSources</Filter>
+    </None>
+    <None Include="System.Xml.XPath.XPathDocument.datasource">
+      <Filter>DataSources</Filter>
+    </None>
+    <None Include="System.Xml.XPath.XPathItem.datasource">
+      <Filter>DataSources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>
