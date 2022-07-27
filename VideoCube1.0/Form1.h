@@ -9,7 +9,6 @@
 #include "VBGHTSimular.h"
 #include "HumanRegionDetection.h"
 #include "time.h"
-#include "KthNearestNeighbor.h"
 #include "CountRank.h"
 
 namespace VideoCube10 {
@@ -99,8 +98,8 @@ namespace VideoCube10 {
 
 
 
-	private: System::Windows::Forms::ToolStripMenuItem^  跑程式ToolStripMenuItem;
-	private: System::Windows::Forms::ToolStripMenuItem^  vbghtToolStripMenuItem;
+
+
 	private: System::Windows::Forms::GroupBox^  groupBox2;
 	private: System::Windows::Forms::CheckBox^  checkBox6;
 	private: System::Windows::Forms::CheckBox^  checkBox7;
@@ -122,14 +121,14 @@ namespace VideoCube10 {
 	private: System::Windows::Forms::ListBox^  listBox1;
 	private: System::Windows::Forms::Label^  label4;
 	private: System::Windows::Forms::ToolStripMenuItem^  backgroundDifferenceToolStripMenuItem;
-	private: System::Windows::Forms::CheckBox^  checkBox1;
-	private: System::Windows::Forms::CheckBox^  checkBox2;
-	private: System::Windows::Forms::CheckBox^  checkBox3;
-	private: System::Windows::Forms::GroupBox^  groupBox1;
+
+
+
+
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::ListBox^  listBox2;
-	private: System::Windows::Forms::ProgressBar^  progressBar2;
-	private: System::Windows::Forms::ProgressBar^  progressBar3;
+
+
 	private: System::Windows::Forms::TextBox^  textBox4;
 	private: System::Windows::Forms::Label^  T;
 	private: System::Windows::Forms::ToolStripMenuItem^  catchImageToolStripMenuItem;
@@ -152,6 +151,10 @@ private: System::Windows::Forms::ToolStripMenuItem^  videoRotationToolStripMenuI
 private: System::Windows::Forms::ToolStripMenuItem^  noiseToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  resizeToolStripMenuItem;
 private: System::Windows::Forms::CheckBox^  checkBox11;
+private: System::Windows::Forms::GroupBox^  groupBox1;
+private: System::Windows::Forms::CheckBox^  checkBox3;
+private: System::Windows::Forms::CheckBox^  checkBox12;
+private: System::Windows::Forms::CheckBox^  checkBox1;
 
 
 
@@ -187,8 +190,6 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->videoRotationToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->noiseToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->resizeToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->跑程式ToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->vbghtToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->progressBar1 = (gcnew System::Windows::Forms::ProgressBar());
 			this->treeView1 = (gcnew System::Windows::Forms::TreeView());
@@ -204,6 +205,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->listView3 = (gcnew System::Windows::Forms::ListView());
 			this->listView2 = (gcnew System::Windows::Forms::ListView());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBox11 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox10 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox6 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox7 = (gcnew System::Windows::Forms::CheckBox());
@@ -217,12 +219,6 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
 			this->checkBox4 = (gcnew System::Windows::Forms::CheckBox());
 			this->checkBox5 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox2 = (gcnew System::Windows::Forms::CheckBox());
-			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
-			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
-			this->progressBar2 = (gcnew System::Windows::Forms::ProgressBar());
-			this->progressBar3 = (gcnew System::Windows::Forms::ProgressBar());
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->T = (gcnew System::Windows::Forms::Label());
 			this->textBox6 = (gcnew System::Windows::Forms::TextBox());
@@ -236,15 +232,18 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->label10 = (gcnew System::Windows::Forms::Label());
 			this->textBox10 = (gcnew System::Windows::Forms::TextBox());
-			this->checkBox11 = (gcnew System::Windows::Forms::CheckBox());
+			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBox3 = (gcnew System::Windows::Forms::CheckBox());
+			this->checkBox12 = (gcnew System::Windows::Forms::CheckBox());
 			this->menuStrip1->SuspendLayout();
 			this->splitContainer1->Panel1->SuspendLayout();
 			this->splitContainer1->Panel2->SuspendLayout();
 			this->splitContainer1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			this->groupBox3->SuspendLayout();
-			this->groupBox1->SuspendLayout();
 			this->groupBox4->SuspendLayout();
+			this->groupBox1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// openFileDialog1
@@ -253,8 +252,8 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->fileToolStripMenuItem, 
-				this->dataBaseToolStripMenuItem, this->跑程式ToolStripMenuItem});
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->fileToolStripMenuItem, 
+				this->dataBaseToolStripMenuItem});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(990, 24);
@@ -333,19 +332,6 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->resizeToolStripMenuItem->Text = L"Resize";
 			this->resizeToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::resizeToolStripMenuItem_Click);
 			// 
-			// 跑程式ToolStripMenuItem
-			// 
-			this->跑程式ToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->vbghtToolStripMenuItem});
-			this->跑程式ToolStripMenuItem->Name = L"跑程式ToolStripMenuItem";
-			this->跑程式ToolStripMenuItem->Size = System::Drawing::Size(56, 20);
-			this->跑程式ToolStripMenuItem->Text = L"跑程式";
-			// 
-			// vbghtToolStripMenuItem
-			// 
-			this->vbghtToolStripMenuItem->Name = L"vbghtToolStripMenuItem";
-			this->vbghtToolStripMenuItem->Size = System::Drawing::Size(109, 22);
-			this->vbghtToolStripMenuItem->Text = L"vbght";
-			// 
 			// listView1
 			// 
 			this->listView1->Location = System::Drawing::Point(0, 29);
@@ -359,7 +345,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// 
 			this->progressBar1->Location = System::Drawing::Point(12, 628);
 			this->progressBar1->Name = L"progressBar1";
-			this->progressBar1->Size = System::Drawing::Size(313, 23);
+			this->progressBar1->Size = System::Drawing::Size(950, 23);
 			this->progressBar1->TabIndex = 3;
 			// 
 			// treeView1
@@ -494,20 +480,30 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->groupBox2->Controls->Add(this->checkBox10);
 			this->groupBox2->Controls->Add(this->checkBox6);
 			this->groupBox2->Controls->Add(this->checkBox7);
-			this->groupBox2->Location = System::Drawing::Point(580, 166);
+			this->groupBox2->Location = System::Drawing::Point(501, 190);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(126, 121);
+			this->groupBox2->Size = System::Drawing::Size(126, 120);
 			this->groupBox2->TabIndex = 12;
 			this->groupBox2->TabStop = false;
+			// 
+			// checkBox11
+			// 
+			this->checkBox11->AutoSize = true;
+			this->checkBox11->Location = System::Drawing::Point(20, 90);
+			this->checkBox11->Name = L"checkBox11";
+			this->checkBox11->Size = System::Drawing::Size(100, 16);
+			this->checkBox11->TabIndex = 22;
+			this->checkBox11->Text = L"Detection Count";
+			this->checkBox11->UseVisualStyleBackColor = true;
 			// 
 			// checkBox10
 			// 
 			this->checkBox10->AutoSize = true;
 			this->checkBox10->Location = System::Drawing::Point(20, 68);
 			this->checkBox10->Name = L"checkBox10";
-			this->checkBox10->Size = System::Drawing::Size(48, 16);
+			this->checkBox10->Size = System::Drawing::Size(102, 16);
 			this->checkBox10->TabIndex = 20;
-			this->checkBox10->Text = L"KNN";
+			this->checkBox10->Text = L"無用~同跑程式";
 			this->checkBox10->UseVisualStyleBackColor = true;
 			// 
 			// checkBox6
@@ -532,7 +528,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// 
 			// button1
 			// 
-			this->button1->Location = System::Drawing::Point(741, 341);
+			this->button1->Location = System::Drawing::Point(903, 372);
 			this->button1->Name = L"button1";
 			this->button1->Size = System::Drawing::Size(75, 23);
 			this->button1->TabIndex = 13;
@@ -589,7 +585,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->checkBox8->Name = L"checkBox8";
 			this->checkBox8->Size = System::Drawing::Size(93, 16);
 			this->checkBox8->TabIndex = 5;
-			this->checkBox8->Text = L"Templete Path:";
+			this->checkBox8->Text = L"Template Path:";
 			this->checkBox8->UseVisualStyleBackColor = true;
 			// 
 			// textBox2
@@ -628,65 +624,9 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->checkBox5->Text = L"Cube DataBase Path:";
 			this->checkBox5->UseVisualStyleBackColor = true;
 			// 
-			// checkBox1
-			// 
-			this->checkBox1->AutoSize = true;
-			this->checkBox1->Location = System::Drawing::Point(20, 21);
-			this->checkBox1->Name = L"checkBox1";
-			this->checkBox1->Size = System::Drawing::Size(39, 16);
-			this->checkBox1->TabIndex = 0;
-			this->checkBox1->Text = L"0.5";
-			this->checkBox1->UseVisualStyleBackColor = true;
-			// 
-			// checkBox2
-			// 
-			this->checkBox2->AutoSize = true;
-			this->checkBox2->Location = System::Drawing::Point(20, 43);
-			this->checkBox2->Name = L"checkBox2";
-			this->checkBox2->Size = System::Drawing::Size(39, 16);
-			this->checkBox2->TabIndex = 1;
-			this->checkBox2->Text = L"1.0";
-			this->checkBox2->UseVisualStyleBackColor = true;
-			// 
-			// checkBox3
-			// 
-			this->checkBox3->AutoSize = true;
-			this->checkBox3->Location = System::Drawing::Point(20, 65);
-			this->checkBox3->Name = L"checkBox3";
-			this->checkBox3->Size = System::Drawing::Size(39, 16);
-			this->checkBox3->TabIndex = 2;
-			this->checkBox3->Text = L"2.0";
-			this->checkBox3->UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			this->groupBox1->Controls->Add(this->checkBox3);
-			this->groupBox1->Controls->Add(this->checkBox2);
-			this->groupBox1->Controls->Add(this->checkBox1);
-			this->groupBox1->Location = System::Drawing::Point(493, 158);
-			this->groupBox1->Name = L"groupBox1";
-			this->groupBox1->Size = System::Drawing::Size(81, 88);
-			this->groupBox1->TabIndex = 6;
-			this->groupBox1->TabStop = false;
-			this->groupBox1->Text = L"Scaling Size";
-			// 
-			// progressBar2
-			// 
-			this->progressBar2->Location = System::Drawing::Point(331, 628);
-			this->progressBar2->Name = L"progressBar2";
-			this->progressBar2->Size = System::Drawing::Size(313, 23);
-			this->progressBar2->TabIndex = 14;
-			// 
-			// progressBar3
-			// 
-			this->progressBar3->Location = System::Drawing::Point(650, 628);
-			this->progressBar3->Name = L"progressBar3";
-			this->progressBar3->Size = System::Drawing::Size(313, 23);
-			this->progressBar3->TabIndex = 15;
-			// 
 			// textBox4
 			// 
-			this->textBox4->Location = System::Drawing::Point(674, 138);
+			this->textBox4->Location = System::Drawing::Point(575, 157);
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(32, 22);
 			this->textBox4->TabIndex = 16;
@@ -695,7 +635,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// T
 			// 
 			this->T->AutoSize = true;
-			this->T->Location = System::Drawing::Point(598, 144);
+			this->T->Location = System::Drawing::Point(499, 163);
 			this->T->Name = L"T";
 			this->T->Size = System::Drawing::Size(71, 12);
 			this->T->TabIndex = 7;
@@ -736,7 +676,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->groupBox4->Controls->Add(this->label6);
 			this->groupBox4->Controls->Add(this->textBox6);
 			this->groupBox4->Controls->Add(this->textBox7);
-			this->groupBox4->Location = System::Drawing::Point(493, 316);
+			this->groupBox4->Location = System::Drawing::Point(662, 201);
 			this->groupBox4->Name = L"groupBox4";
 			this->groupBox4->Size = System::Drawing::Size(213, 73);
 			this->groupBox4->TabIndex = 13;
@@ -788,7 +728,7 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// label10
 			// 
 			this->label10->AutoSize = true;
-			this->label10->Location = System::Drawing::Point(721, 144);
+			this->label10->Location = System::Drawing::Point(622, 163);
 			this->label10->Name = L"label10";
 			this->label10->Size = System::Drawing::Size(57, 12);
 			this->label10->TabIndex = 17;
@@ -796,39 +736,69 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			// 
 			// textBox10
 			// 
-			this->textBox10->Location = System::Drawing::Point(784, 140);
+			this->textBox10->Location = System::Drawing::Point(685, 159);
 			this->textBox10->Name = L"textBox10";
 			this->textBox10->Size = System::Drawing::Size(32, 22);
 			this->textBox10->TabIndex = 18;
 			this->textBox10->Text = L"10";
 			// 
-			// checkBox11
+			// groupBox1
 			// 
-			this->checkBox11->AutoSize = true;
-			this->checkBox11->Location = System::Drawing::Point(20, 90);
-			this->checkBox11->Name = L"checkBox11";
-			this->checkBox11->Size = System::Drawing::Size(100, 16);
-			this->checkBox11->TabIndex = 21;
-			this->checkBox11->Text = L"Detection Count";
-			this->checkBox11->UseVisualStyleBackColor = true;
+			this->groupBox1->Controls->Add(this->checkBox1);
+			this->groupBox1->Controls->Add(this->checkBox3);
+			this->groupBox1->Controls->Add(this->checkBox12);
+			this->groupBox1->Location = System::Drawing::Point(501, 316);
+			this->groupBox1->Name = L"groupBox1";
+			this->groupBox1->Size = System::Drawing::Size(126, 93);
+			this->groupBox1->TabIndex = 23;
+			this->groupBox1->TabStop = false;
+			this->groupBox1->Enter += gcnew System::EventHandler(this, &Form1::groupBox1_Enter);
+			// 
+			// checkBox1
+			// 
+			this->checkBox1->AutoSize = true;
+			this->checkBox1->Location = System::Drawing::Point(20, 63);
+			this->checkBox1->Name = L"checkBox1";
+			this->checkBox1->Size = System::Drawing::Size(68, 16);
+			this->checkBox1->TabIndex = 2;
+			this->checkBox1->Text = L"MutiVote";
+			this->checkBox1->UseVisualStyleBackColor = true;
+			// 
+			// checkBox3
+			// 
+			this->checkBox3->AutoSize = true;
+			this->checkBox3->Location = System::Drawing::Point(20, 43);
+			this->checkBox3->Name = L"checkBox3";
+			this->checkBox3->Size = System::Drawing::Size(58, 16);
+			this->checkBox3->TabIndex = 1;
+			this->checkBox3->Text = L"Scaling";
+			this->checkBox3->UseVisualStyleBackColor = true;
+			// 
+			// checkBox12
+			// 
+			this->checkBox12->AutoSize = true;
+			this->checkBox12->Location = System::Drawing::Point(20, 21);
+			this->checkBox12->Name = L"checkBox12";
+			this->checkBox12->Size = System::Drawing::Size(64, 16);
+			this->checkBox12->TabIndex = 0;
+			this->checkBox12->Text = L"Rotation";
+			this->checkBox12->UseVisualStyleBackColor = true;
 			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(990, 663);
+			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->label10);
 			this->Controls->Add(this->textBox10);
 			this->Controls->Add(this->groupBox4);
 			this->Controls->Add(this->T);
 			this->Controls->Add(this->textBox4);
-			this->Controls->Add(this->progressBar3);
-			this->Controls->Add(this->progressBar2);
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->button1);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->splitContainer1);
-			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->progressBar1);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
@@ -846,10 +816,10 @@ private: System::Windows::Forms::CheckBox^  checkBox11;
 			this->groupBox2->PerformLayout();
 			this->groupBox3->ResumeLayout(false);
 			this->groupBox3->PerformLayout();
-			this->groupBox1->ResumeLayout(false);
-			this->groupBox1->PerformLayout();
 			this->groupBox4->ResumeLayout(false);
 			this->groupBox4->PerformLayout();
+			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -885,7 +855,7 @@ private: void Thread1()
 }
 private: void Thread2()
 {
-char FileName[100],Path[200],ActionName[50];
+	char FileName[100],Path[200],ActionName[50];
 	int TempleteNumberOfFiles = listView3->Items->Count;
 	int CubeNumberOfFiles =  listView2->Items->Count;
 	char VideoFileName[300],CubeFileName[300],TempleteFileName[300];
@@ -904,15 +874,33 @@ char FileName[100],Path[200],ActionName[50];
 	  EtrainNumber = atoi(ETrainNumber);
 	  sprintf(STestNumber,"%s",textBox9->Text->ToCharArray());
 	  StestNumber = atoi(STestNumber);
-	 sprintf(ETestNumber,"%s",textBox8->Text->ToCharArray());
+	  sprintf(ETestNumber,"%s",textBox8->Text->ToCharArray());
 	  EtestNumber = atoi(ETestNumber);
 	  sprintf(ETestNumber,"%s",textBox4->Text->ToCharArray());//simulartopN
 	  SimularTopN = atoi(ETestNumber);
 	  sprintf(ETestNumber,"%s",textBox10->Text->ToCharArray());//PeaktopN
 	  PeakTopN = atoi(ETestNumber);
+	  bool Scaling = false;
+	  bool Rotation = false;
+	  bool MutiVote = false;
+
+
+	  if(checkBox1->Checked == true)
+	  {
+		MutiVote = true;
+	  }
+	  if(checkBox12->Checked == true)
+	  {
+		  Rotation = true;
+	  }
+	  if(checkBox3->Checked == true)
+	  {
+		  Scaling = true;
+	  }
+
 	progressBar1->Minimum = StestNumber;
-	progressBar1->Maximum = StestNumber + (int)((EtestNumber - StestNumber)/3) - 1; //(int)(TempleteNumberOfFiles/3) - 1;
-	for(int FileIndex = StestNumber ; FileIndex < StestNumber + (int)((EtestNumber - StestNumber)/3); FileIndex++)
+	progressBar1->Maximum = StestNumber + (EtestNumber - StestNumber) - 1;
+	for(int FileIndex = StestNumber ; FileIndex < StestNumber + (EtestNumber - StestNumber); FileIndex++)
 	{
 		progressBar1->Value = FileIndex;
 		time_t start;
@@ -923,16 +911,12 @@ char FileName[100],Path[200],ActionName[50];
 		for(int DataIndex = StrainNumber; DataIndex < EtrainNumber; DataIndex++)
 		{
 			ImagePoint *VoteCoordinate;
-			//if(DataIndex>= StestNumber && DataIndex < StestNumber + (int)((EtestNumber - StestNumber)/3))
-				//continue;
 			sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
 			sprintf(Path,"%s",textBox1->Text->ToCharArray());
 			sprintf(CubeFileName, "%s\\%s",Path, FileName);
 			sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
 			sprintf(Path,"%s",textBox2->Text->ToCharArray());
 			sprintf(VideoFileName, "%s\\%s", Path,FileName);
-			if(!strcmp(VideoFileName,TempleteFileName))
-				continue;
 			start = clock();
 			hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
 			listBox1->Items->Add(listView3->Items[FileIndex]->Text);
@@ -955,7 +939,7 @@ char FileName[100],Path[200],ActionName[50];
 				}
 				else
 				{
-					TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,PeakTopN,FileName);
+					TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,PeakTopN,FileName,Scaling,Rotation,MutiVote);
 					VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
 					ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
 					sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
@@ -982,291 +966,36 @@ char FileName[100],Path[200],ActionName[50];
 	}
 }
 
-private: void Thread3()
-{
-	time_t start;
-	char FileName[100],Path[200],ActionName[50];
-	int TempleteNumberOfFiles = listView3->Items->Count;
-	int CubeNumberOfFiles =  listView2->Items->Count;
-	char VideoFileName[300],CubeFileName[300],TempleteFileName[300];
-	VolumeBasedGHT VolumeBasedGHTObj;
-	int hasFile,SimularTopN,PeakTopN;
-	double TopSimilar;
-
-	array<String^,1>^ ActionFileName;
-	char TempleteAction[50],DatabaseAction[50];
-
-	 char STestNumber[3], ETestNumber[3], STrainNumber[3], ETrainNumber[3];
-	  int StrainNumber,EtrainNumber,StestNumber,EtestNumber;
-	  sprintf(STrainNumber,"%s",textBox7->Text->ToCharArray());
-	  StrainNumber = atoi(STrainNumber);
-	  sprintf(ETrainNumber,"%s",textBox6->Text->ToCharArray());
-	  EtrainNumber = atoi(ETrainNumber);
-	  sprintf(STestNumber,"%s",textBox9->Text->ToCharArray());
-	  StestNumber = atoi(STestNumber);
-	 sprintf(ETestNumber,"%s",textBox8->Text->ToCharArray());
-	  EtestNumber = atoi(ETestNumber);
-	  sprintf(ETestNumber,"%s",textBox4->Text->ToCharArray());//simulartopN
-	  SimularTopN = atoi(ETestNumber);
-	  sprintf(ETestNumber,"%s",textBox10->Text->ToCharArray());//PeaktopN
-	  PeakTopN = atoi(ETestNumber);
-
-	progressBar2->Minimum = StestNumber + (int)((EtestNumber - StestNumber)/3);
-	progressBar2->Maximum = StestNumber + (int)((EtestNumber - StestNumber)/3*2)-1;
-	for(int FileIndex = StestNumber + (int)((EtestNumber - StestNumber)/3); FileIndex < StestNumber + (int)((EtestNumber - StestNumber)/3*2); FileIndex++)
-	{
-		progressBar2->Value = FileIndex;
-		VBGHTSimular VBGHTSimularObj(SimularTopN);
-		sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-		sprintf(Path,"%s",textBox3->Text->ToCharArray());
-		sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-		for(int DataIndex = StrainNumber; DataIndex < EtrainNumber; DataIndex++)
-		{
-			ImagePoint *VoteCoordinate;
-			//if(DataIndex >=  StestNumber + (int)((EtestNumber - StestNumber)/3) && DataIndex < StestNumber + (int)((EtestNumber - StestNumber)/3*2))
-				//continue;
-			sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
-			sprintf(Path,"%s",textBox1->Text->ToCharArray());
-			sprintf(CubeFileName, "%s\\%s",Path, FileName);
-			sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
-			sprintf(Path,"%s",textBox2->Text->ToCharArray());
-			sprintf(VideoFileName, "%s\\%s", Path,FileName);
-			if(!strcmp(VideoFileName,TempleteFileName))
-				continue;
-			start = clock();
-			hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
-			listBox1->Items->Add(listView3->Items[FileIndex]->Text);
-			if(hasFile == -1)
-			{
-				FILE *FilePtr2 = fopen("errorVideo.txt","a");
-				fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-				fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-				fclose(FilePtr2);
-			}
-			else
-			{
-				hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
-				if(hasFile == -1)
-				{
-					FILE *FilePtr2 = fopen("errorVideo.txt","a");
-					fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-					fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-					fclose(FilePtr2);
-				}
-				else
-				{
-						TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,PeakTopN,FileName);
-						VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
-						ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
-						sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
-						sprintf(DatabaseAction,"%s",ActionFileName[1]); //DatabaseAction
-						//VBGHTSimularObj.Simularity(TopSimilar,DatabaseAction,FileName);
-						VBGHTSimularObj.VoteCoordinateSimularity(VoteCoordinate,PeakTopN);
-						VolumeBasedGHTObj.ReleaseVoteTable();
-						VolumeBasedGHTObj.Release();
-				}
-
-				VolumeBasedGHTObj.ReleaseRTable();
-			}
-			listBox2->Items->Add(listView2->Items[DataIndex]->Text);
-			//delete VoteCoordinate;
-			//VoteCoordinate = NULL;
-		}
-		ActionFileName = listView3->Items[FileIndex]->Text->Split('_','.');
-		sprintf(TempleteAction,"%s",ActionFileName[1]); //DataBaseAction
-		sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray());
-		time_t end = clock() - start;
-		//VBGHTSimularObj.ResultSimular(TempleteAction,FileName,end);
-		VBGHTSimularObj.SaveResultSimular(FileName,TempleteAction,end);
-		VBGHTSimularObj.Release();	 
-	} 
-}
-
-private: void Thread4()
-{
-
-	time_t start;
-	char FileName[100],Path[200],ActionName[50];
-	int TempleteNumberOfFiles = listView3->Items->Count;
-	int CubeNumberOfFiles =  listView2->Items->Count;
-	char VideoFileName[300],CubeFileName[300],TempleteFileName[300];
-	VolumeBasedGHT VolumeBasedGHTObj;
-	int hasFile,SimularTopN,PeakTopN;
-	double TopSimilar;
-
-	array<String^,1>^ ActionFileName;
-	char TempleteAction[50],DatabaseAction[50];
-
-	  char STestNumber[3], ETestNumber[3], STrainNumber[3], ETrainNumber[3];
-	  int StrainNumber,EtrainNumber,StestNumber,EtestNumber;
-	  sprintf(STrainNumber,"%s",textBox7->Text->ToCharArray());
-	  StrainNumber = atoi(STrainNumber);
-	  sprintf(ETrainNumber,"%s",textBox6->Text->ToCharArray());
-	  EtrainNumber = atoi(ETrainNumber);
-	  sprintf(STestNumber,"%s",textBox9->Text->ToCharArray());
-	  StestNumber = atoi(STestNumber);
-	 sprintf(ETestNumber,"%s",textBox8->Text->ToCharArray());
-	  EtestNumber = atoi(ETestNumber);
-	  EtestNumber = atoi(ETestNumber);
-	  sprintf(ETestNumber,"%s",textBox4->Text->ToCharArray());//simulartopN
-	  SimularTopN = atoi(ETestNumber);
-	  sprintf(ETestNumber,"%s",textBox10->Text->ToCharArray());//PeaktopN
-	  PeakTopN = atoi(ETestNumber);
-	ImagePoint *VoteCoordinate;
-	progressBar3->Minimum = StestNumber + (int)((EtestNumber - StestNumber)/3*2);
-	progressBar3->Maximum = EtestNumber - 1;
-	for(int FileIndex = StestNumber + (int)((EtestNumber - StestNumber)/3*2) ; FileIndex < EtestNumber; FileIndex++)
-	{
-		progressBar3->Value = FileIndex;
-		VBGHTSimular VBGHTSimularObj(SimularTopN);
-		sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-		sprintf(Path,"%s",textBox3->Text->ToCharArray());
-		sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-		for(int DataIndex = StrainNumber; DataIndex < EtrainNumber; DataIndex++)
-		{
-			ImagePoint *VoteCoordinate;
-			//if(DataIndex >= StestNumber + (int)((EtestNumber - StestNumber)/3*2) && FileIndex < EtestNumber)
-			//	continue;
-			sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
-			sprintf(Path,"%s",textBox1->Text->ToCharArray());
-			sprintf(CubeFileName, "%s\\%s",Path, FileName);
-			sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
-			sprintf(Path,"%s",textBox2->Text->ToCharArray());
-			sprintf(VideoFileName, "%s\\%s", Path,FileName);
-			if(!strcmp(VideoFileName,TempleteFileName))
-				continue;
-			start = clock();
-			hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
-			listBox1->Items->Add(listView3->Items[FileIndex]->Text);
-			if(hasFile == -1)
-			{
-				FILE *FilePtr2 = fopen("errorVideo.txt","a");
-				fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-				fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-				fclose(FilePtr2);
-			}
-			else
-			{
-				hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
-				if(hasFile == -1)
-				{
-					FILE *FilePtr2 = fopen("errorVideo.txt","a");
-					fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-					fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-					fclose(FilePtr2);
-				}
-				else
-				{
-					TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,PeakTopN,FileName);
-					VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
-					ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
-					sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
-					sprintf(DatabaseAction,"%s",ActionFileName[1]); //DatabaseAction
-					//VBGHTSimularObj.Simularity(TopSimilar,DatabaseAction,FileName);
-					VBGHTSimularObj.VoteCoordinateSimularity(VoteCoordinate,PeakTopN);
-					VolumeBasedGHTObj.ReleaseVoteTable();
-					VolumeBasedGHTObj.Release();
-				}
-
-				VolumeBasedGHTObj.ReleaseRTable();
-			}
-			listBox2->Items->Add(listView2->Items[DataIndex]->Text);
-			//delete VoteCoordinate;
-			//VoteCoordinate = NULL;
-		}
-		ActionFileName = listView3->Items[FileIndex]->Text->Split('_','.');
-		sprintf(TempleteAction,"%s",ActionFileName[1]); //DataBaseAction
-		sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray());
-		time_t end = clock() - start;
-		//VBGHTSimularObj.ResultSimular(TempleteAction,FileName,end);
-		VBGHTSimularObj.SaveResultSimular(FileName,TempleteAction,end);
-		VBGHTSimularObj.Release();	 
-	} 
-		 
-}
-
-private: void Thread5()
-{
-	char FileName[100],Path[200],ActionName[50];
-	int TempleteNumberOfFiles = listView3->Items->Count;
-	int CubeNumberOfFiles =  listView2->Items->Count;
-	char VideoFileName[300],CubeFileName[300],TempleteFileName[300];
-	VolumeBasedGHT VolumeBasedGHTObj;
-	int hasFile;
-	double TopSimilar;
-
-	array<String^,1>^ ActionFileName;
-	char TempleteAction[50],DatabaseAction[50];
-
-	progressBar1->Minimum = 0;
-	progressBar1->Maximum = TempleteNumberOfFiles-1;
-	for(int FileIndex = 0; FileIndex < TempleteNumberOfFiles; FileIndex++)
-	{
-		progressBar1->Value = FileIndex;
-		time_t start;
-		VBGHTSimular VBGHTSimularObj(10);
-		sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-		sprintf(Path,"%s",textBox3->Text->ToCharArray());
-		sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-		for(int DataIndex = 0; DataIndex < CubeNumberOfFiles; DataIndex++)
-		{
-			sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
-			sprintf(Path,"%s",textBox1->Text->ToCharArray());
-			sprintf(CubeFileName, "%s\\%s",Path, FileName);
-			sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
-			sprintf(Path,"%s",textBox2->Text->ToCharArray());
-			sprintf(VideoFileName, "%s\\%s", Path,FileName);
-			//if(!strcmp(VideoFileName,TempleteFileName))
-				//continue;
-			//start = clock();
-			hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
-			listBox1->Items->Add(listView3->Items[FileIndex]->Text);
-			if(hasFile == -1)
-			{
-				FILE *FilePtr2 = fopen("errorVideo.txt","a");
-				fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-				fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-				fclose(FilePtr2);
-			}
-			else
-			{
-				hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
-				if(hasFile == -1)
-				{
-					FILE *FilePtr2 = fopen("errorVideo.txt","a");
-					fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-					fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-					fclose(FilePtr2);
-				}
-				else
-				{
-					TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,10,FileName);
-					ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
-					sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
-					sprintf(DatabaseAction,"%s",ActionFileName[1]); //DatabaseAction
-					VBGHTSimularObj.Simularity(TopSimilar,DatabaseAction,FileName);
-					VolumeBasedGHTObj.ReleaseVoteTable();
-					VolumeBasedGHTObj.Release();
-				}
-
-				VolumeBasedGHTObj.ReleaseRTable();
-			}
-			//listBox2->Items->Add(listView2->Items[DataIndex]->Text);
-
-		}
-		//ActionFileName = listView3->Items[FileIndex]->Text->Split('_','.');
-		//sprintf(TempleteAction,"%s",ActionFileName[1]); //DataBaseAction
-		//sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray());
-	    //time_t end = clock() - start;
-		//VBGHTSimularObj.ResultSimular(TempleteAction,FileName,end);
-		//VBGHTSimularObj.Release();	 
-	}
-}
 
 
 
 private: System::Void openFileToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
+				/*Stream^ myStream;
+				  int NumberOfFiles,FileLen;
+				  char cFileName[10];
+				  array<String^,1>^ sFileName;
+				  OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
+				  openFileDialog1->InitialDirectory = "d:\\";
+				  openFileDialog1->Filter = "";
+				  openFileDialog1->FilterIndex = 2;
+				  openFileDialog1->RestoreDirectory = true;
+				  openFileDialog1->Multiselect = true;
+
+				  if ( openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK )
+				  {
+					 if ( (myStream = openFileDialog1->OpenFile()) != nullptr )
+					 {
+						// Insert code to read the stream here.
+						 NumberOfFiles = openFileDialog1->FileNames->Length;
+						 for(int FileIndex = 0; FileIndex < NumberOfFiles; FileIndex++)
+						 {
+							sFileName = openFileDialog1->FileNames[FileIndex]->Split('\\');
+						 }
+
+						 myStream->Close();
+					 }
+				  }*/
 
 		 }
 private: System::Void 建databaseToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1352,29 +1081,6 @@ private: System::Void treeView1_NodeMouseClick(System::Object^  sender, System::
 
 				listView3->AutoResizeColumns(ColumnHeaderAutoResizeStyle::HeaderSize);
 			}
-			
-			if(checkBox9->Checked == true)
-			{
-				listView3->Items->Clear();
-				for(int i = 0 ; i < dir->Length; i++)
-				{
-					item = gcnew ListViewItem(dir[i]->Name, 0);
-					item->SubItems->Add("Directory");
-					item->SubItems->Add( dir[i]->LastAccessTime.ToShortDateString());
-					listView3->Items->Add(item);
-				}
-				array<FileInfo^>^ file = nodeDirInfo->GetFiles();
-				for(int i = 0 ; i < file->Length; i++)
-				{
-					item = gcnew ListViewItem(file[i]->Name, 1);
-					item->SubItems->Add("File");
-					item->SubItems->Add(file[i]->LastAccessTime.ToShortDateString());
-					listView3->Items->Add(item);
-				}
-
-				listView3->AutoResizeColumns(ColumnHeaderAutoResizeStyle::HeaderSize);
-			}
-
 		 }
 
 private: System::Void comboBox1_SelectedValueChanged(System::Object^  sender, System::EventArgs^  e) {
@@ -1386,23 +1092,23 @@ private: System::Void comboBox1_SelectedValueChanged(System::Object^  sender, Sy
 private: System::Void treeView1_NodeMouseDoubleClick(System::Object^  sender, System::Windows::Forms::TreeNodeMouseClickEventArgs^  e) {
 			String^ Path = e->Node->FullPath;
 
-			if(checkBox5->Checked == true)
-			{
-				textBox1->Text = Path;
-			}
-			if(checkBox4->Checked == true)
-			{
-				textBox2->Text = Path;
-			}
-			if(checkBox8->Checked == true)
-			{
-				textBox3->Text = Path;
-			}
+				if(checkBox5->Checked == true)
+				{
+					textBox1->Text = Path;
+				}
+				if(checkBox4->Checked == true)
+				{
+					textBox2->Text = Path;
+				}
+				if(checkBox8->Checked == true)
+				{
+					textBox3->Text = Path;
+				}
 
-			if(checkBox9->Checked == true)
-			{
-				textBox5->Text = Path;
-			}
+				if(checkBox9->Checked == true)
+				{
+					textBox5->Text = Path;
+				}
 		 }
 
 private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1418,6 +1124,9 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 				ImagePoint *VoteCoordinate;
 				array<String^,1>^ ActionFileName;
 				char TempleteAction[50],DatabaseAction[50];
+				bool Rotation = false;
+				bool Scaling = false;
+				bool MutiVote = false;
 
 				 char STestNumber[3], ETestNumber[3], STrainNumber[3], ETrainNumber[3];
 				  int StrainNumber,EtrainNumber,StestNumber,EtestNumber;
@@ -1434,41 +1143,172 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 				  sprintf(ETestNumber,"%s",textBox10->Text->ToCharArray());//PeaktopN
 				  PeakTopN = atoi(ETestNumber);
 
-			if(checkBox6->Checked == true)
-			{
-				progressBar1->Minimum = 0;
-				progressBar1->Maximum = TempleteNumberOfFiles-1;
-				for(int FileIndex = 0; FileIndex < TempleteNumberOfFiles; FileIndex++)
+				if(checkBox1->Checked == true)
 				{
-					progressBar1->Value = FileIndex;
-					time_t start;
-					VBGHTSimular VBGHTSimularObj(10);
-					sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-					sprintf(Path,"%s",textBox3->Text->ToCharArray());
-					sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-					for(int DataIndex = 0; DataIndex < CubeNumberOfFiles; DataIndex++)
+					MutiVote = true;
+				}
+				if(checkBox12->Checked == true)
+				{
+					Rotation = true;
+				}
+				if(checkBox3->Checked == true)
+				{
+					Scaling = true;
+				}
+
+				if(checkBox6->Checked == true)
+				{
+					//ThreadStart^ myThreadDelegate = gcnew ThreadStart(this, &VideoCube10::Form1::Thread5);
+					//Thread^ trd = gcnew Thread(myThreadDelegate);
+					//trd->IsBackground = true;
+					//trd->Start();
+
+					if(textBox1->Text->Length == 0 )
 					{
-						sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
-						sprintf(Path,"%s",textBox1->Text->ToCharArray());
-						sprintf(CubeFileName, "%s\\%s",Path, FileName);
-						sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
-						sprintf(Path,"%s",textBox2->Text->ToCharArray());
-						sprintf(VideoFileName, "%s\\%s", Path,FileName);
-						//if(!strcmp(VideoFileName,TempleteFileName))
-							//continue;
-						//start = clock();
-						hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
-						listBox1->Items->Add(listView3->Items[FileIndex]->Text);
-						if(hasFile == -1)
+						MessageBox::Show("Cube DataBase Path Error!");
+					}
+					else if( textBox2->Text->Length == 0 )
+					{
+						MessageBox::Show("Video DataBase Path Error!");
+					}
+					else if(textBox3->Text->Length == 0)
+					{
+						MessageBox::Show("Template Path Error!");
+					}
+					else
+					{
+						
+						progressBar1->Minimum = 0;
+						progressBar1->Maximum = TempleteNumberOfFiles-1;
+						for(int FileIndex = 0; FileIndex < TempleteNumberOfFiles; FileIndex++)
 						{
-							FILE *FilePtr2 = fopen("errorVideo.txt","a");
-							fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-							fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-							fclose(FilePtr2);
+							progressBar1->Value = FileIndex;
+							time_t start;
+							VBGHTSimular VBGHTSimularObj(SimularTopN);
+							sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
+							sprintf(Path,"%s",textBox3->Text->ToCharArray());
+							sprintf(TempleteFileName, "%s\\%s", Path,FileName);
+							for(int DataIndex = 0; DataIndex < CubeNumberOfFiles; DataIndex++)
+							{
+								sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
+								sprintf(Path,"%s",textBox1->Text->ToCharArray());
+								sprintf(CubeFileName, "%s\\%s",Path, FileName);
+								sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
+								sprintf(Path,"%s",textBox2->Text->ToCharArray());
+								sprintf(VideoFileName, "%s\\%s", Path,FileName);
+								//if(!strcmp(VideoFileName,TempleteFileName))
+									//continue;
+								//start = clock();
+								hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
+								listBox1->Items->Add(listView3->Items[FileIndex]->Text);
+								if(hasFile == -1)
+								{
+									FILE *FilePtr2 = fopen("errorVideo.txt","a");
+									fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
+									fprintf(FilePtr2,"Database:%s\n",CubeFileName);
+									fclose(FilePtr2);
+								}
+								else
+								{
+									hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
+									if(hasFile == -1)
+									{
+										FILE *FilePtr2 = fopen("errorVideo.txt","a");
+										fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
+										fprintf(FilePtr2,"Database:%s\n",CubeFileName);
+										fclose(FilePtr2);
+									}
+									else
+									{
+										TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,PeakTopN,FileName,Scaling,Rotation,MutiVote);
+										VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
+										ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
+										sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
+										sprintf(DatabaseAction,"%s",ActionFileName[1]); //DatabaseAction
+										//VBGHTSimularObj.Simularity(TopSimilar,DatabaseAction,FileName);
+										VBGHTSimularObj.VoteCoordinateSimularity(VoteCoordinate,10);
+										VolumeBasedGHTObj.ReleaseVoteTable();
+										VolumeBasedGHTObj.Release();
+									}
+
+									VolumeBasedGHTObj.ReleaseRTable();
+								}
+								listBox2->Items->Add(listView2->Items[DataIndex]->Text);
+
+							}
+							ActionFileName = listView3->Items[FileIndex]->Text->Split('_','.');
+							sprintf(TempleteAction,"%s",ActionFileName[1]); //DataBaseAction
+							sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray());
+							time_t end = clock() - start;
+							//VBGHTSimularObj.ResultSimular(TempleteAction,FileName,end);
+							VBGHTSimularObj.SaveResultSimular(FileName,TempleteAction,end);
+							VBGHTSimularObj.Release();	 
 						}
-						else
+					}
+				}
+
+				if(checkBox7->Checked == true)
+				{
+					if(textBox1->Text->Length == 0 )
+					{
+						MessageBox::Show("Cube DataBase Path Error!");
+					}
+					else if( textBox2->Text->Length == 0 )
+					{
+						MessageBox::Show("Video DataBase Path Error!");
+					}
+					else if(textBox3->Text->Length == 0)
+					{
+						MessageBox::Show("Template Path Error!");
+					}
+					else
+					{
+
+						ThreadStart^ myThreadDelegate = gcnew ThreadStart(this, &VideoCube10::Form1::Thread2);
+						Thread^ trd = gcnew Thread(myThreadDelegate);
+						trd->IsBackground = true;
+						trd->Start();
+					}
+
+				}
+
+				if(checkBox10->Checked == true)
+				{
+					if(textBox1->Text->Length == 0 )
+					{
+						MessageBox::Show("Cube DataBase Path Error!");
+					}
+					else if( textBox2->Text->Length == 0 )
+					{
+						MessageBox::Show("Video DataBase Path Error!");
+					}
+					else if(textBox3->Text->Length == 0)
+					{
+						MessageBox::Show("Template Path Error!");
+					}
+					else
+					{
+						progressBar1->Minimum = StestNumber;
+						progressBar1->Maximum = EtestNumber  - 1; 
+						for(int FileIndex = StestNumber ; FileIndex < EtestNumber; FileIndex++)
 						{
-							hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
+							progressBar1->Value = FileIndex;
+							time_t start;
+							sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
+							sprintf(Path,"%s",textBox3->Text->ToCharArray());
+							sprintf(TempleteFileName, "%s\\%s", Path,FileName);
+							int DataIndex = FileIndex;
+							ImagePoint *VoteCoordinate;
+
+							sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
+							sprintf(Path,"%s",textBox1->Text->ToCharArray());
+							sprintf(CubeFileName, "%s\\%s",Path, FileName);
+							sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
+							sprintf(Path,"%s",textBox2->Text->ToCharArray());
+							sprintf(VideoFileName, "%s\\%s", Path,FileName);
+							start = clock();
+							hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
+							listBox1->Items->Add(listView3->Items[FileIndex]->Text);
 							if(hasFile == -1)
 							{
 								FILE *FilePtr2 = fopen("errorVideo.txt","a");
@@ -1478,114 +1318,47 @@ private: System::Void button1_Click(System::Object^  sender, System::EventArgs^ 
 							}
 							else
 							{
-								TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,10,FileName);
-								VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
-								ActionFileName = listView2->Items[DataIndex]->Text->Split('_','.');
-								sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray());
-								sprintf(DatabaseAction,"%s",ActionFileName[1]); //DatabaseAction
-								//VBGHTSimularObj.Simularity(TopSimilar,DatabaseAction,FileName);
-								VBGHTSimularObj.VoteCoordinateSimularity(VoteCoordinate,10);
-								VolumeBasedGHTObj.ReleaseVoteTable();
-								VolumeBasedGHTObj.Release();
+								hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
+								if(hasFile == -1)
+								{
+									FILE *FilePtr2 = fopen("errorVideo.txt","a");
+									fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
+									fprintf(FilePtr2,"Database:%s\n",CubeFileName);
+									fclose(FilePtr2);
+								}
+								else
+								{
+									TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,PeakTopN,FileName,Scaling,Rotation,MutiVote);
+									VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
+									VolumeBasedGHTObj.ReleaseVoteTable();
+									VolumeBasedGHTObj.Release();
+								}
+
+								VolumeBasedGHTObj.ReleaseRTable();
 							}
-
-							VolumeBasedGHTObj.ReleaseRTable();
+							time_t end = clock() - start;		
 						}
-						listBox2->Items->Add(listView2->Items[DataIndex]->Text);
-
 					}
-					ActionFileName = listView3->Items[FileIndex]->Text->Split('_','.');
-					sprintf(TempleteAction,"%s",ActionFileName[1]); //DataBaseAction
-					sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray());
-					time_t end = clock() - start;
-					//VBGHTSimularObj.ResultSimular(TempleteAction,FileName,end);
-					VBGHTSimularObj.SaveResultSimular(FileName,TempleteAction,end);
-					VBGHTSimularObj.Release();	 
 				}
-			}
-
-			if(checkBox7->Checked == true)
-		    {
-				ThreadStart^ myThreadDelegate = gcnew ThreadStart(this, &VideoCube10::Form1::Thread2);
-				Thread^ trd = gcnew Thread(myThreadDelegate);
-				trd->IsBackground = true;
-				trd->Start();
-				//ThreadStart^ myThreadDelegate1 = gcnew ThreadStart(this, &VideoCube10::Form1::Thread3);
-				//Thread^ trd1 = gcnew Thread(myThreadDelegate1);
-				//trd1->IsBackground = true;
-				//trd1->Start();
-				//ThreadStart^ myThreadDelegate2 = gcnew ThreadStart(this, &VideoCube10::Form1::Thread4);
-				//Thread^ trd2 = gcnew Thread(myThreadDelegate2);
-				//trd2->IsBackground = true;
-				//trd2->Start();
-			}
-			if(checkBox10->Checked == true)
-			{
-
-				progressBar1->Minimum = StestNumber;
-				progressBar1->Maximum = EtestNumber  - 1; 
-				for(int FileIndex = StestNumber ; FileIndex < EtestNumber; FileIndex++)
-				{
-					progressBar1->Value = FileIndex;
-					time_t start;
-					sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-					sprintf(Path,"%s",textBox3->Text->ToCharArray());
-					sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-					int DataIndex = FileIndex;
-					ImagePoint *VoteCoordinate;
-
-					sprintf(FileName,"%s",listView2->Items[DataIndex]->Text->ToCharArray()); //Cube
-					sprintf(Path,"%s",textBox1->Text->ToCharArray());
-					sprintf(CubeFileName, "%s\\%s",Path, FileName);
-					sprintf(FileName,"%s",listView1->Items[DataIndex]->Text->ToCharArray()); //Video						
-					sprintf(Path,"%s",textBox2->Text->ToCharArray());
-					sprintf(VideoFileName, "%s\\%s", Path,FileName);
-					start = clock();
-					hasFile = VolumeBasedGHTObj.ComputeRTable(TempleteFileName);
-					listBox1->Items->Add(listView3->Items[FileIndex]->Text);
-					if(hasFile == -1)
-					{
-						FILE *FilePtr2 = fopen("errorVideo.txt","a");
-						fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-						fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-						fclose(FilePtr2);
-					}
-					else
-					{
-						hasFile = VolumeBasedGHTObj.LoadCubeDataBase(CubeFileName);//hasFile
-						if(hasFile == -1)
-						{
-							FILE *FilePtr2 = fopen("errorVideo.txt","a");
-							fprintf(FilePtr2,"Input:%s\n",TempleteFileName);
-							fprintf(FilePtr2,"Database:%s\n",CubeFileName);
-							fclose(FilePtr2);
-						}
-						else
-						{
-							TopSimilar = VolumeBasedGHTObj.Voting(VideoFileName,CubeFileName,1.0,PeakTopN,FileName);
-							VoteCoordinate = VolumeBasedGHTObj.GetVoteCoordinate();
-							VolumeBasedGHTObj.ReleaseVoteTable();
-							VolumeBasedGHTObj.Release();
-						}
-
-						VolumeBasedGHTObj.ReleaseRTable();
-					}
-					time_t end = clock() - start;
-	
-				}
-			}
 
 			if(checkBox11->Checked == true)
 			{
-				CountRank CountRankObj;
-				for(int FileIndex = StestNumber ; FileIndex < EtestNumber; FileIndex++)
+				if(textBox5->Text->Length == 0)
 				{
-					sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
-					sprintf(Path,"%s",textBox5->Text->ToCharArray());
-					sprintf(TempleteFileName, "%s\\%s", Path,FileName);
-					CountRankObj.ComputeRank(TempleteFileName,30,FileIndex);
-				}	
-				CountRankObj.SaveDetection("Test\\Detection.txt");
+					MessageBox::Show("Path Error!");
+				}
+				else
+				{
+					CountRank CountRankObj;
+					for(int FileIndex = StestNumber ; FileIndex < EtestNumber; FileIndex++)
+					{
+						sprintf(FileName,"%s",listView3->Items[FileIndex]->Text->ToCharArray()); //templete
+						sprintf(Path,"%s",textBox5->Text->ToCharArray());
+						sprintf(TempleteFileName, "%s\\%s", Path,FileName);
+						CountRankObj.ComputeRank(TempleteFileName,30,FileIndex);
+					}	
+					CountRankObj.SaveDetection("Test\\Detection.txt");
+				}
 			}
 
 		 }
@@ -1634,44 +1407,6 @@ private: System::Void backgroundDifferenceToolStripMenuItem_Click(System::Object
 private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 		 }
 private: System::Void catchImageToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-
-			  Stream^ myStream;
-			  int Length;
-			  array<wchar_t>^ wFileName;
-			  int NumberOfFiles,FileLen,NumberOfList;
-			  char cFileName[100];
-			  array<String^,1>^ sFileName;
-			  OpenFileDialog^ openFileDialog1 = gcnew OpenFileDialog;
-			  openFileDialog1->InitialDirectory = "d:\\";
-			  openFileDialog1->Filter = "";
-			  openFileDialog1->FilterIndex = 2;
-			  openFileDialog1->RestoreDirectory = true;
-			  openFileDialog1->Multiselect = true;
-			  VolumeBasedGHT VolumeBasedGHTObj;
-			  char InputFileName[300],FileName[100];
-			  char OutPath[200];
-			  HumanRegionDetection HumanRegionDetectionObj;
-			  char framenumber[3];
-			  sprintf(framenumber,"%s",textBox6->Text->ToCharArray());
-			  int NumberFrame = atoi(framenumber);
-				 if ( openFileDialog1->ShowDialog() == System::Windows::Forms::DialogResult::OK )
-				 {
-					if((myStream = openFileDialog1->OpenFile()) != nullptr )
-					 {
-						NumberOfFiles = openFileDialog1->FileNames->Length;
-						for(int FileIndex = 0; FileIndex < NumberOfFiles; FileIndex++)
-						{
-							wFileName = openFileDialog1->FileNames[FileIndex]->ToCharArray();
-							sFileName = openFileDialog1->FileNames[FileIndex]->Split('\\');
-							sprintf(OutPath,"%s",textBox5->Text->ToCharArray());
-							sprintf(InputFileName, "%s",wFileName);
-							Length = sFileName->Length;
-							wFileName = sFileName[Length-1]->ToCharArray();
-							sprintf(FileName,"%s",wFileName);
-							HumanRegionDetectionObj.CatchImage(OutPath,NumberFrame,InputFileName,FileName);
-						}
-					 }
-				 }
 
 	 }
 private: System::Void videoRotationToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -1796,6 +1531,8 @@ private: System::Void resizeToolStripMenuItem_Click(System::Object^  sender, Sys
 					 }
 				 }
 
+		 }
+private: System::Void groupBox1_Enter(System::Object^  sender, System::EventArgs^  e) {
 		 }
 };
 }

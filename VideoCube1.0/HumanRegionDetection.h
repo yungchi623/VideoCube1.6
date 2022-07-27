@@ -31,12 +31,8 @@ private:
 public:
 	HumanRegionDetection(void);
 	~HumanRegionDetection(void);
-	void BackgroundDifference();
 	void SaveImage(char* OutputPath,char* FileName,char* InputPath,int Frame,double scaling,char* tempAction);
 	void ComputeHumanRegion(char *videoFileName);
-	void GrayHistogramThreshold();
-	void RegionGrowing(uchar treshold);
-	void CatchImage(char* Path,int CatchFrame,char *InputFileName,char* FileName);
 	VideoRegion RoiRegion;
 	void AddNoise(char* FileName);
 	void ReSize(double scale,char* FileName);

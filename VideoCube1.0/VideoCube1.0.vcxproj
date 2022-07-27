@@ -48,11 +48,17 @@
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
     <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -60,7 +66,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
@@ -116,9 +122,8 @@
     <ClCompile Include="Ctreeview.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="FrameSequenceToCubes.cpp" />
-    <ClCompile Include="HistogramOfOrientedGradients.cpp" />
     <ClCompile Include="HumanRegionDetection.cpp" />
-    <ClCompile Include="KthNearestNeighbor.cpp" />
+    <ClCompile Include="SparseMatrix.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
@@ -136,8 +141,8 @@
     </ClInclude>
     <ClInclude Include="FrameSequenceToCubes.h" />
     <ClInclude Include="HumanRegionDetection.h" />
-    <ClInclude Include="KthNearestNeighbor.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="SparseMatrix.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="VBGHTSimular.h" />
     <ClInclude Include="VolumeBasedGHT.h" />

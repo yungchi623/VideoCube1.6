@@ -4,10 +4,11 @@
 
 VolumeBasedGHT::VolumeBasedGHT(void)
 {
+	
 }
 
 
-int VolumeBasedGHT::ComputeRTable(char* videoFileName)
+int VolumeBasedGHT::ComputeRTable(char* videoFileName)//計算template的rtable
 {
 	CvCapture* Capture = cvCaptureFromAVI(videoFileName);
 	double gradient;
@@ -16,8 +17,8 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 	_tWidth = cvGetCaptureProperty(Capture, CV_CAP_PROP_FRAME_WIDTH);
 	_tTime = cvGetCaptureProperty(Capture, CV_CAP_PROP_FRAME_COUNT);
 
+	_tTime -= (_tTime % 4); // 因為一次取四張frame所以少計算一些frame使能被4整除
 	
-	sprintf(_TemplateFileName,"%s",videoFileName);
 	
 	if(_tHeight == 0 || _tWidth == 0 || _tTime == 0)
 	{
@@ -25,9 +26,6 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 		return -1;
 	}
 
-	int TimeScaling = 1;
-	_tTime/=TimeScaling;
-	_tTime -= (_tTime % 4); // 因為一次取四張frame所以少計算一些frame使能被4整除
 
 	IplImage* Frames[4];
 	IplImage* tempFrames[4];
@@ -37,7 +35,10 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 	Frames[1] = cvCreateImage(cvSize(_tWidth, _tHeight), 8, 3);
 	Frames[2] = cvCreateImage(cvSize(_tWidth, _tHeight), 8, 3);
 	Frames[3] = cvCreateImage(cvSize(_tWidth, _tHeight), 8, 3);
-
+	//Frames[0]->origin = 1;
+	//Frames[1]->origin = 1;
+	//Frames[2]->origin = 1;
+	//Frames[3]->origin = 1;
 
 	//tempFrame = cvCreateImage(cvSize(_tWidth, _tHeight), 8, 3);
 	//tempFrame->origin = 1;
@@ -51,33 +52,29 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 
 	_templateCubeGradient = new double*[_tTime/4];//CubeSimular
 	//double threshold;
-
 	for(int f = 0; f < _tTime; f++)
 	{
 
-		if(f % TimeScaling == 0)
+		try
 		{
-			try
-			{
-				cvCopy( cvQueryFrame(Capture), Frames[CountFrame]);
-			}
-			catch(cv::Exception e)
-			{
-				for(int i = 0; i < _tTime/4; i++)
-					_templateCubeGradient[i] = new double[2];
-				cvReleaseImage(&Frames[0]);
-				cvReleaseImage(&Frames[1]);
-				cvReleaseImage(&Frames[2]);
-				cvReleaseImage(&Frames[3]);
-				FrameSequenceToCubesObj.ReleaseBuffer();
-				cvReleaseCapture(&Capture);
-				ReleaseRTable();
-				return -1;
-			}
-			
-			CountFrame++;
+			cvCopy( cvQueryFrame(Capture), Frames[CountFrame]);
 		}
+		catch(cv::Exception e)
+		{
+			for(int i = 0; i < _tTime/4; i++)
+				_templateCubeGradient[i] = new double[2];
+			cvReleaseImage(&Frames[0]);
+			cvReleaseImage(&Frames[1]);
+			cvReleaseImage(&Frames[2]);
+			cvReleaseImage(&Frames[3]);
+			FrameSequenceToCubesObj.ReleaseBuffer();
+			cvReleaseCapture(&Capture);
+			ReleaseRTable();
+			return -1;
+		}
+		
 
+		CountFrame++;
 		if(CountFrame == 4 && f != (_tTime / 2.0 + 4))
 			CountFrame = 0;
 		if(f == _tTime / 2.0 + 4)
@@ -99,36 +96,33 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 	Capture = cvCaptureFromAVI(videoFileName);
 	CountFrame = 0;
 	int Next = 0;
-
 	char OutputFileFolder[300];
 
 	for(int f = 0; f < _tTime; f++)
 	{
-		if(f % TimeScaling == 0)
+			
+		try
 		{
-			try
-			{			
-				sprintf(OutputFileFolder, "%s_%d.jpg",videoFileName,f+CountFrame);
-				cvCopy(cvQueryFrame(Capture), Frames[CountFrame]);
-				cvSaveImage(OutputFileFolder, Frames[CountFrame]);	
-			}
-			catch(cv::Exception e)
-			{
-				for(int i = 0; i < _tTime/4; i++)
-					_templateCubeGradient[i] = new double[2];
-				cvReleaseImage(&Frames[0]);
-				cvReleaseImage(&Frames[1]);
-				cvReleaseImage(&Frames[2]);
-				cvReleaseImage(&Frames[3]);
-				FrameSequenceToCubesObj.ReleaseBuffer();
-				cvReleaseCapture(&Capture);
-				ReleaseRTable();
-				return -1;
-			}
-
-			CountFrame++;
+			sprintf(OutputFileFolder, "%s_%d.jpg",videoFileName,f+CountFrame);
+			cvCopy(cvQueryFrame(Capture), Frames[CountFrame]);
+			cvSaveImage(OutputFileFolder, Frames[CountFrame]);	
+		}
+		catch(cv::Exception e)
+		{
+			for(int i = 0; i < _tTime/4; i++)
+				_templateCubeGradient[i] = new double[2];
+			cvReleaseImage(&Frames[0]);
+			cvReleaseImage(&Frames[1]);
+			cvReleaseImage(&Frames[2]);
+			cvReleaseImage(&Frames[3]);
+			FrameSequenceToCubesObj.ReleaseBuffer();
+			cvReleaseCapture(&Capture);
+			ReleaseRTable();
+			return -1;
 		}
 
+
+		CountFrame++;
 		if(CountFrame == 4)
 		{
 		
@@ -229,7 +223,7 @@ int VolumeBasedGHT::ComputeRTable(char* videoFileName)
 }
 
 
-int VolumeBasedGHT::ComputeCubeDataBase(char* videoFileName,char* outputFileName)
+int VolumeBasedGHT::ComputeCubeDataBase(char* videoFileName,char* outputFileName)//建立database的cube資訊
 {
 	CvCapture* Capture = cvCaptureFromAVI(videoFileName);
 	_countIndex = 0;
@@ -312,7 +306,7 @@ int VolumeBasedGHT::ComputeCubeDataBase(char* videoFileName,char* outputFileName
 	return 1;
 }
 
-int VolumeBasedGHT::LoadCubeDataBase(char* videoFileName)
+int VolumeBasedGHT::LoadCubeDataBase(char* videoFileName)//載入database的資料
 {
 	FILE* FilePtr;
 	//sprintf(_fileName,"%s.txt",videoFileName);
@@ -359,7 +353,7 @@ RTableParameter* VolumeBasedGHT::ConstructRTableParameterNode(double r, double* 
 
 }
 
-void VolumeBasedGHT::ReleaseRTable()
+void VolumeBasedGHT::ReleaseRTable()//relase
 {
 	for(int i = 0; i < SIZE; i++)
 	{
@@ -380,18 +374,28 @@ void VolumeBasedGHT::ReleaseRTable()
 	_templateCubeGradient = NULL;
 }
 
-void  VolumeBasedGHT::Release()
+void  VolumeBasedGHT::Release()//relase
 {
 		delete VoteCoordinate;
 		VoteCoordinate = NULL;
-		//delete Similar;
-		//Similar = NULL;
 		delete CubeInformation;
 		CubeInformation = NULL;
 }
 
-double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scaling,int TopN,char* TempleteFileName)
+double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,int TopN,char* TempleteFileName,bool Scaling,bool Rotation,bool MutiVote)//利用vbght投票
 {
+
+
+	// 建立票箱
+
+	//FILE* FilePtr;
+	//if(!(FilePtr = fopen(CubeFileName, "r")))
+	//{
+		//return -1;
+	//}
+
+//	fscanf(FilePtr,"%d, %d, %d, %d\n",&_vNumberOfCube,&_vWidth,&_vHeight,&_vTime);
+
 	double gradient;
 	double sqrtTwo =  sqrt(2.0);
 	int Height = _vHeight;
@@ -399,46 +403,50 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 	int NumberOfFrame = _vTime;
 	double subGray;
 
-	// 建立票箱
-	/*_votingTable = new int**[Height];
-	for(int c = 0; c < Height; c++)
+	//SparseMatrix _sparseMatrix;
+
+    int NumberOfCube = (_vWidth/4)*(_vHeight/4);
+	//CubeInformation = new CubeInfo[NumberOfCube];
+	//CubeInfo* FirstPatchCubeInformation = new CubeInfo[NumberOfCube];
+	bool IsFirstPatch = true;
+
+	int RotationAR[36];
+	int RotationBR[36];
+	for(int i = 0 ; i < 36; i++)
 	{
-		_votingTable[c] = new int*[Width];
-		for(int r = 0; r < Width; r++)
-		{
-			_votingTable[c][r] = new int[NumberOfFrame];
-			for(int t = 0; t < NumberOfFrame; t++)
-				_votingTable[c][r][t] = 0;
-		}
-	}*/
+		RotationAR[i] = 0;
+		RotationBR[i] = 0;
+	}
+
 
 		// 建立票箱
-	for(int S = 0 ; S < 3; S++)
-	{
-		for(int AR = 0 ; AR < 2 ; AR++)
+		for(int S = 0 ; S < 3; S++)
 		{
-			for(int BR = 0 ; BR < 2 ; BR++)
+			for(int AR = 0 ; AR < 2 ; AR++)
 			{
-				_votingTable[S][AR][BR] = new int**[Height];
-				for(int c = 0; c < Height; c++)
+				for(int BR = 0 ; BR < 2 ; BR++)
 				{
-					_votingTable[S][AR][BR][c] = new int*[Width];
-					for(int r = 0; r < Width; r++)
+					_votingTable[S][AR][BR] = new int**[Height];
+					for(int c = 0; c < Height; c++)
 					{
-						_votingTable[S][AR][BR][c][r] = new int[NumberOfFrame];
-						for(int t = 0; t < NumberOfFrame; t++)
-							_votingTable[S][AR][BR][c][r][t] = 0;
+						_votingTable[S][AR][BR][c] = new int*[Width];
+						for(int r = 0; r < Width; r++)
+						{
+							_votingTable[S][AR][BR][c][r] = new int[NumberOfFrame];
+							for(int t = 0; t < NumberOfFrame; t++)
+								_votingTable[S][AR][BR][c][r][t] = 0;
+						}
 					}
 				}
 			}
 		}
-	}
 
-			int NumberOfCube = _vNumberOfCube;
+
+
 			for(int i = 0; i < NumberOfCube; i++)
 			{
 				subGray = abs(CubeInformation[i].H1 - CubeInformation[i].H2);
-				if(((CubeInformation[i].L <= sqrtTwo) && (CubeInformation[i].L >= (-1 * sqrtTwo))) && (subGray > 50))
+				if(((CubeInformation[i].L <= sqrtTwo) && (CubeInformation[i].L >= (-1 * sqrtTwo))) && (subGray > 80))
 				{
 					// 計算 R-Table Index
 					double AverageGray = 0;
@@ -454,7 +462,7 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 							if(ih == IH && iw == IW)
 								continue;
 							int CubeInformationIndex = ih + iw / 4;
-							if(CubeInformationIndex >= 0 && CubeInformationIndex < NumberOfCube)
+							if(CubeInformationIndex >= 0 && CubeInformationIndex < _vNumberOfCube)
 							{
 								AverageGray += CubeInformation[CubeInformationIndex].AverageGrayValue;
 								CountDir++;
@@ -493,10 +501,18 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 
 								double dT = sqrt(NT[1] * NT[1] + NT[2] * NT[2]);
 								double dV = sqrt(NV[1] * NV[1] + NV[2] * NV[2]);
-								double AlphaV =0;//atan(NV[2]/NV[1]);
-								double BataV =0;//atan(NV[0]/dV);
-								double AlphaT=0;//atan(NT[2]/NT[1]);
-								double BataT =0;//atan(NT[0]/dT);
+								double AlphaV = 0;
+								double BataV = 0;
+								double AlphaT= 0;
+								double BataT = 0;
+
+								if(Rotation == true)
+								{
+									AlphaV = atan(NV[2]/NV[1]);
+									BataV = atan(NV[0]/dV);
+									AlphaT= atan(NT[2]/NT[1]);
+									BataT = atan(NT[0]/dT);
+								}
 
 								double CosBTBV = cos(BataT-BataV);
 								double SinAT = sin(AlphaT);
@@ -505,9 +521,9 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 								double SinAV = sin(AlphaV);
 								double CosAV = cos(AlphaV);
 								double FinalMat[3];
-
-								double AR = (AlphaT - AlphaV) * (180/3.14);
-								double BR = (BataT - BataV) * (180/3.14);
+ 
+								double AR =  (AlphaT * (180/3.14)) - (AlphaV * (180/3.14)) ;
+								double BR =  (BataT * (180/3.14)) - (BataV * (180/3.14)) ;
 
 								FinalMat[0] = NR[0] * CosBTBV + NR[1] * SinBTBV * SinAT + NR[2] * SinBTBV * CosAT;
 								FinalMat[1] = NR[0] * SinAV * (-1*SinBTBV) + NR[1] * (CosAV * CosAT + SinAV * CosBTBV * SinAT) + NR[2] * (CosAV*(-1*SinAT) + SinAV *CosBTBV * CosAT);
@@ -519,59 +535,129 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 								XPV[1] = XPCV[1] + CubeInformation[i].L * NV[1];
 								XPV[2] = XPCV[2] + CubeInformation[i].L * NV[2];
 								double rPT = Parameter->R;
-								int countS = 1;
-								double S = 1;
-								//for(double S = 0.5; S <= 2; S+=0.5)
-								//{
-									//if(S == 1.5)
-										//continue;
+
+								int countS;
+								double Star;
+								double E;
+
+								if(Scaling == true)
+								{
+									countS = 0;
+									Star = 0.5;
+									E = 2;
+								}
+								else
+								{
+									countS = 1;
+									Star = 1;
+									E = 1;
+								}
+
+								for(double S = Star; S <= E; S+=0.5)
+								{
+									if(S == 1.5)
+										continue;
 									int Tar[3] = {0};
-									Tar[0] =  (int)(XPV[0] +  rPT * S * FinalMat[0]);
-									Tar[1] =  (int)(XPV[1] +  rPT * S * FinalMat[1]);
-									Tar[2] =  (int)(XPV[2] +  rPT * S * FinalMat[2]);
+									Tar[0] =  XPV[0] + (int)( S *rPT *  FinalMat[0]);
+									Tar[1] =  XPV[1] + (int)( S *rPT *  FinalMat[1]);
+									Tar[2] =  XPV[2] + (int)( S *rPT *  FinalMat[2]);
 
-									//Tar[0] = XPV[0] + (int)( rPT * NR[0]);
-									//Tar[1] = XPV[1] + (int)( rPT * NR[1]);
-									//Tar[2] = XPV[2] + (int)( rPT * NR[2]);
+									int Tar0 = Tar[0];
+									int Tar1 = Tar[1];
+									int Tar2 = Tar[2];
 
+									if(AR < 0)
+									{
+									   AR+=360;
+									}
+
+									if(BR < 0)
+									{
+										BR+=360;
+									}
+
+									int IndexAR = (int)(AR/10+0.5)%36;
+									int IndexBR = (int)(BR/10+0.5)%36;
 									if(Tar[0] >= 0 && Tar[1] >= 0 && Tar[2] >= 0)
 									{
-										if((Tar[0] < Width-1 && Tar[1] < Height-1 && Tar[2] < NumberOfFrame-1) && (Tar[0] >=1  && Tar[1] >=1 && Tar[2] >=1)) //&& (AR >= 0 && AR <= 10) && (BR >= 0 && BR <= 10))
+										if((Tar[0] < Width-1 && Tar[1] < Height-1 && Tar[2] < NumberOfFrame-1) && (Tar[0] >=1  && Tar[1] >=1 && Tar[2] >=1) && (AR >= 0 && AR <= 10) && (BR >= 0 && BR <= 10))
 										{
-											/*_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]+1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]-1]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]]++;
-											_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]+1]++;*/
-											
-											_votingTable[countS][0][0][Tar[1]][Tar[0]][Tar[2]]++;
+											if(MutiVote == true)
+											{
+												/*_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0-1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0-1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0-1,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0+1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0+1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1-1,Tar0+1,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0-1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0-1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0-1,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0+1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0+1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1,Tar0+1,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0-1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0-1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0-1,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0,Tar2+1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0+1,Tar2-1);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0+1,Tar2);
+												_sparseMatrix.Add(countS,(int)(AR/10+0.5),(int)(BR/10+0.5),Tar1+1,Tar0+1,Tar2+1);*/
+
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]-1][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]-1][Tar[0]+1][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]-1][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]+1][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]-1][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]][Tar[2]+1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]-1]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]]++;
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]+1][Tar[0]+1][Tar[2]+1]++;
+
+											}
+											else
+											{
+												//_sparseMatrix.Add(countS,IndexAR,IndexBR,Tar1,Tar0,Tar2);
+												_votingTable[countS][(int)(AR/10+0.5)][(int)(BR/10+0.5)][Tar[1]][Tar[0]][Tar[2]]++;
+											}
+
+											RotationAR[IndexAR]++;
+											RotationBR[IndexBR]++;
 
 										}
 									}
-									//countS++;
-								//}
+
+									if(Scaling == true)
+									{
+										countS++;
+									}
+								}
 								Parameter = Parameter->Next;
 							}// END for(int j = 0; j < _rTable[Index].NumberOfParam; j++)
 						}
@@ -581,15 +667,16 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 				}//END if(CubeInformation[i].L) 
 			}
 
+	//VoteCoordinate = _sparseMatrix.GetTopN(TopN);
 	VoteCoordinate = TopNSort(TopN);
-	//DrawImage(videoFileName,VoteCoordinate,TopN);
+	//DrawImage(videoFileName,VoteCoordinate,TopN,TempleteFileName);
 	//Similar = new double[TopN];
 	int isFairFile = FindTopSimular(videoFileName,VoteCoordinate,TopN,0); 
 	DrawImage(videoFileName,VoteCoordinate,TopN,TempleteFileName);
 
 	/*char FileName[300];
 	sprintf(FileName,"Test\\simular\\%s.txt",TempleteFileName);
-	FILE *FilePtr= fopen(FileName,"a");
+	FilePtr= fopen(FileName,"a");
 
 	for(int current = 0;current < TopN;current++)
 	{
@@ -598,9 +685,28 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 
 	fclose(FilePtr);*/
 
+	/*FilePtr= fopen("Test\\simular\\ALLRotationAR.txt","w");
+
+	for(int current = 0;current < 36;current++)
+	{
+		fprintf(FilePtr, "%d ", RotationAR[current]);
+	}
+
+	fclose(FilePtr);
+
+	FilePtr= fopen("Test\\simular\\ALLRotationBR.txt","w");
+
+	for(int current = 0;current < 36;current++)
+	{
+		fprintf(FilePtr, "%d ", RotationBR[current]);
+	}
+
+	fclose(FilePtr);
+
+	_sparseMatrix.countSAB(_vHeight,_vWidth,_vTime,1.0,10);
 	//==========================================
-	//delete VoteCoordinate;
-	//VoteCoordinate = NULL;
+	_sparseMatrix.Release();*/
+
 	if(isFairFile < TopN)
 		return VoteCoordinate[isFairFile].Similar;
 	else
@@ -608,13 +714,13 @@ double VolumeBasedGHT::Voting(char* videoFileName,char* CubeFileName,double scal
 
 }
 
+
 ImagePoint *VolumeBasedGHT::GetVoteCoordinate()
 {
 	return VoteCoordinate;
 }
 
-
-int VolumeBasedGHT::FindTopSimular(char *FileName,ImagePoint *VoteCoordinate,int N,int Feature)
+int VolumeBasedGHT::FindTopSimular(char *FileName,ImagePoint *VoteCoordinate,int N,int Feature) //排序並找出最相似的前幾名的投票點
 {
 	//CvCapture *Capture;
        int isFairFile = 0;
@@ -671,7 +777,7 @@ int VolumeBasedGHT::FindTopSimular(char *FileName,ImagePoint *VoteCoordinate,int
 	return isFairFile;
 }
 
-void VolumeBasedGHT::DrawImage(char *FileName,ImagePoint *VotePoint,int N,char* TempleteFileName)
+void VolumeBasedGHT::DrawImage(char *FileName,ImagePoint *VotePoint,int N,char* TempleteFileName)  //輸出抓取的圖
 {
 	CvCapture *Capture = cvCaptureFromAVI(FileName);
 	
@@ -743,11 +849,12 @@ void VolumeBasedGHT::DrawImage(char *FileName,ImagePoint *VotePoint,int N,char* 
 
 
 
-ImagePoint* VolumeBasedGHT::TopNSort(int N)
+ImagePoint* VolumeBasedGHT::TopNSort(int N) //已移到sqarseMatrix
 {
 	ImagePoint *VoteCoordinate = new ImagePoint[N];
 	//ImagePoint tempCoordinate;
 	int CountTopTen = 0;
+
 
 	int countS = 0;
 	for(double S = 0.5 ; S <= 2; S += 0.5)
@@ -764,10 +871,8 @@ ImagePoint* VolumeBasedGHT::TopNSort(int N)
 					{
 						for(int r = 0; r < _vWidth; r++)
 						{
-
 							if(CountTopTen < N) // 塞滿前十名
 							{
-
 								VoteCoordinate[CountTopTen].Vote =  _votingTable[countS][AR][BR][c][r][t];
 								VoteCoordinate[CountTopTen].x = r;
 								VoteCoordinate[CountTopTen].y = c;
@@ -823,7 +928,6 @@ ImagePoint* VolumeBasedGHT::TopNSort(int N)
 							}
 							else // 一一比較是否屬於前十名
 							{
-
 								int i;
 								double tempScaling,tempAR,tempBR;
 
@@ -861,7 +965,6 @@ ImagePoint* VolumeBasedGHT::TopNSort(int N)
 									VoteCoordinate[i].Arotation = AR * 10;
 									VoteCoordinate[i].Brotation = BR * 10;
 								}
-								
 							}
 						}
 					}
@@ -869,21 +972,14 @@ ImagePoint* VolumeBasedGHT::TopNSort(int N)
 			}
 		}
 		countS++;
-	}
+	} // for(double S = 0.5 ; S <= 2; S += 0.5)
 
 	return VoteCoordinate;
 }
 
-void VolumeBasedGHT::ReleaseVoteTable()
+void VolumeBasedGHT::ReleaseVoteTable() //無用
 {
-	/*for(int c = 0; c < _vHeight; c++)
-	{
-		for(int r = 0; r < _vWidth; r++)
-		{
-			delete _votingTable[c][r];
-		}
-	}
-	_votingTable = NULL;*/
+
 	for(int S = 0; S < 3 ; S++)
 	{
 		for(int AR = 0 ; AR < 2; AR++)
@@ -902,13 +998,9 @@ void VolumeBasedGHT::ReleaseVoteTable()
 			}
 		}
 	}
-	for(int S = 0; S < 3 ; S++)
-		for(int AR = 0 ; AR < 2; AR++)
-			for(int BR = 0 ; BR < 2; BR++)
-			_votingTable[S][AR][BR] = NULL;
 }
 
-double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,int Rotation,char* FileName)
+double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,int Rotation,char* FileName) //在找出視訊序列中最相似的位置並計算其相似度
 {
 	double SimilarValue = 0;
 	
@@ -916,12 +1008,7 @@ double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,in
 	double* VideoInfo;
 	double* TempleteInfo;
 
-	for(int i = 0 ; i < 256; i++)
-	{
-		TempleteHistogram[i] = 0;
-		VideoRoiHistogram[i] = 0;
-	}
-	// Define ROI
+	// 在template和資料庫中將ROI挖出
 	int RoiX, RoiY, RoiZ, RoiW, RoiH, RoiT;
 
 	if(CX > _vWidth || CY > _vHeight || CZ > _vTime)
@@ -1052,8 +1139,8 @@ double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,in
 		StartZ = CZ - RT;
 
 
-
-	if(Rotation == 0 && scaling == 1)
+//==================================================================開始計算相似度
+	if(Rotation == 0 && scaling == 1)  //處理未旋轉未Scaling的狀態
 	{
 		/*for(int f = RoiZ; f < RoiZ + RoiT; f+=4)
 		{
@@ -1202,7 +1289,7 @@ double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,in
 		cvReleaseCapture(&Capture);
 		FrameSequenceToCubesObj.ReleaseBuffer();
 	}
-	else if(Rotation > 0 && scaling == 1)
+	else if(Rotation > 0 && scaling == 1)//處理有旋轉但未Scaling的狀態
 	{
 		FrameSequenceToCubes FrameSequenceToCubesObj(4, RoiH, RoiW);
 
@@ -1385,7 +1472,7 @@ double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,in
 		cvReleaseCapture(&Capture);
 		FrameSequenceToCubesObj.ReleaseBuffer();
 	}
-	else if(scaling != 1 && Rotation == 0)
+	else if(scaling != 1 && Rotation == 0) //處理未旋轉但有Scaling的狀態
 	{
 
 
@@ -1611,73 +1698,8 @@ double VolumeBasedGHT::ComputeSimilar(int CX, int CY, int CZ , double scaling,in
 }
 
 
-void VolumeBasedGHT::ComputeVideoGradientHistogram(double *Histogram,double* CubeGradient,bool* HasValue,int NumberOfCube)
-{
-	double Max = DBL_MIN;
-	double Min = DBL_MAX;
 
-	for(int i = 0 ; i < NumberOfCube; i++)
-	{
-		if(HasValue[i] == true)
-		{
-			if(Max < CubeGradient[i])
-			{
-				Max = CubeGradient[i];
-			}
-			if(Min >  CubeGradient[i])
-			{
-				Min =  CubeGradient[i];
-			}
-		}
-	}
 
-	int Index;
-	for(int i = 0 ; i < NumberOfCube; i++)
-	{
-		if(HasValue[i] == true)
-		{
-			Index =(int) ((CubeGradient[i] - Min)/(Max - Min)*255);
-			if(Index >255 || Index < 0)
-			{
-				double d = CubeGradient[i];
-				int a = 0;
-			}
-			Histogram[Index]++;
-		}
-	}
 
-}
-
-void VolumeBasedGHT::ComputeTempleteGradientHistogram(double *Histogram,double* CubeGradient,int NumberOfCube)
-{
-	double Max = DBL_MIN;
-	double Min = DBL_MAX;
-
-	for(int i = 0 ; i < NumberOfCube; i++)
-	{
-		if(Max < CubeGradient[i])
-		{
-			Max = CubeGradient[i];
-		}
-		if(Min >  CubeGradient[i])
-		{
-			Min =  CubeGradient[i];
-		}
-	}
-
-	int Index;
-	for(int i = 0 ; i < NumberOfCube; i++)
-	{
-		Index = (int)((CubeGradient[i] - Min)/(Max - Min)*255);
-
-		if(Index >255 || Index < 0)
-		{
-			double d = CubeGradient[i];
-			int a = 0;
-		}
-		Histogram[Index]++;
-	}
-
-}
 
 

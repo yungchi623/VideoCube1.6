@@ -14,7 +14,7 @@
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
     </Filter>
     <Filter Include="DataSources">
-      <UniqueIdentifier>{4ca5e574-a701-4962-9a34-c24ffe713fed}</UniqueIdentifier>
+      <UniqueIdentifier>{91a5dfcd-90c3-4a21-940b-ef31694f9b10}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -33,13 +33,10 @@
     <ClCompile Include="FrameSequenceToCubes.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
-    <ClCompile Include="HistogramOfOrientedGradients.cpp">
-      <Filter>原始程式檔</Filter>
-    </ClCompile>
     <ClCompile Include="HumanRegionDetection.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
-    <ClCompile Include="KthNearestNeighbor.cpp">
+    <ClCompile Include="SparseMatrix.cpp">
       <Filter>原始程式檔</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -74,10 +71,10 @@
     <ClInclude Include="HumanRegionDetection.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="KthNearestNeighbor.h">
+    <ClInclude Include="resource.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="SparseMatrix.h">
       <Filter>標頭檔</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">

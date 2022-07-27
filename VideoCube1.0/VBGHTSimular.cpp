@@ -11,7 +11,7 @@ VBGHTSimular::VBGHTSimular(int topN)
 	TopN = topN;
 }
 
-void VBGHTSimular::VoteCoordinateSimularity(ImagePoint *VoteCoordinate,int RecordN)
+void VBGHTSimular::VoteCoordinateSimularity(ImagePoint *VoteCoordinate,int RecordN)//排名前n名相似度
 {
 
 	ImagePoint tempVoteCoordinate;
@@ -210,8 +210,7 @@ void VBGHTSimular::SaveResultSimular(char* TempleteFileName,char* templeteaction
 
 }
 
-
-void VBGHTSimular::Simularity(double simular,char* databaseaction,char* databasename)
+void VBGHTSimular::Simularity(double simular,char* databaseaction,char* databasename)//目前無用
 {
 	double temp;
 	char tempAction[50];
@@ -274,9 +273,7 @@ void VBGHTSimular::Simularity(double simular,char* databaseaction,char* database
 	}
 }
 
-
-
-void VBGHTSimular::ResultSimular(char* templeteaction,char* templetefilename,time_t end)
+void VBGHTSimular::ResultSimular(char* templeteaction,char* templetefilename,time_t end)//存取相似度及時間
 {	
 	char FileName[150];
 	sprintf(FileName,"Test\\simular\\%s.txt",templetefilename);
@@ -293,17 +290,6 @@ void VBGHTSimular::ResultSimular(char* templeteaction,char* templetefilename,tim
 	fprintf(FilePtr, "%s : %lf\n", templeteaction, percent /TopN * 100);
 	fprintf(FilePtr,"Time: %lf\n",(double)(end/1000.0));
 	fclose(FilePtr);
-}
-void VBGHTSimular::SaveFile(char* FileName,int f)
-{
-	if((percent /TopN * 100) >= 30.0)
-	{
-		FILE *FilePtr2= fopen(FileName,"a");
-
-		fprintf(FilePtr2, "%d, ",f);
-
-		fclose(FilePtr2);
-	}
 }
 void VBGHTSimular::Release()
 {

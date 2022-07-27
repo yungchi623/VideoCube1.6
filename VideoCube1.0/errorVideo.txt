@@ -1230,7 +1230,5 @@ Input:D:\\program\VideoCube1.6 - rotaion\VideoCube1.6\VideoCube1.0\Test\templete
 Database:D:\\program\VideoCube1.6 - rotaion\VideoCube1.6\VideoCube1.0\Test\Cube\person21_handclapping_d1_uncomp_1.avi.txt
 Input:D:\\program\VideoCube1.6 - rotaion\VideoCube1.6\VideoCube1.0\Test\templete\person21_boxing_d1_uncomp_1.avi
 Database:D:\\program\VideoCube1.6 - rotaion\VideoCube1.6\VideoCube1.0\Test\Cube\person21_handclapping_d2_uncomp_1.avi.txt
-Input:D:\\program\VideoCube1.6 - Detection\VideoCube1.6\VideoCube1.0\Test\templete\person01_boxing_d1_uncomp_1.avi
-Database:D:\\program\VideoCube1.6 - Detection\VideoCube1.6\VideoCube1.0\Test\Cube\person01_boxing_d1_uncomp_1_10.avi
-Input:D:\\program\VideoCube1.6 - Detection\VideoCube1.6\VideoCube1.0\Test\DB\person03_handclapping_d4_uncomp_1.avi
-Database:D:\\program\VideoCube1.6 - Detection\VideoCube1.6\VideoCube1.0\Test\Cube\person03_handclapping_d4_uncomp_1.avi
+Input:D:\\program\VideoCube1.6_DMP\VideoCube1.6\VideoCube1.0\Test\Video\6.avi
+Database:D:\\program\VideoCube1.6_DMP\VideoCube1.6\VideoCube1.0\Test\BCube\6.avi

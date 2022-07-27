@@ -23,7 +23,6 @@ public:
 	VBGHTSimular(int topN);
 	void Simularity(double simular,char* databaseaction,char* databasename);
 	void ResultSimular(char* templeteaction,char* templetefilename,time_t end);
-	void SaveFile(char* FileName,int f);
 	void Release();
 	void VoteCoordinateSimularity(ImagePoint *VoteCoordinate,int RecordN);
 	void SaveResultSimular(char* TempleteFileName,char* templeteaction,time_t end);

@@ -18,11 +18,6 @@ FrameSequenceToCubes::FrameSequenceToCubes(int numberOfFrame, int height, int wi
 	}
 	//
 
-	if(_numberOfFrame == 0)
-	{
-		_numberOfFrame = 1;
-	}
-
 	// 初始化Cube暫存器
 	_numberOfCube = (_width/_numberOfFrame)*(_height/_numberOfFrame);
 	_cubeInfo = new CubeInfo[_numberOfCube];
@@ -56,8 +51,8 @@ void FrameSequenceToCubes::Transform(IplImage* frames[], int t)
 				_frameInfo[i].R[loc] = R;
 				_frameInfo[i].G[loc] = G;
 				_frameInfo[i].B[loc] = B;
-				//_frameInfo[i].Gray[loc] = (R + G + B) / 3;
 				_frameInfo[i].Gray[loc] = 0.299 * R + 0.587 * G + 0.114 * B;
+				//_frameInfo[i].Gray[loc] = (R + G+ B)/3;
 
 			}
 		}
@@ -135,7 +130,8 @@ void FrameSequenceToCubes::Transform(IplImage* frames[], int t)
 			 _cubeInfo[Next].AverageGrayValue = AverageGrayValue;
 			 if(AverageGrayValue == 0)
 			 {
-				AverageGrayValue = 1;
+				 int Stop = 0;
+				 Stop = 1;
 			 }
 			 _cubeInfo[Next].CubeGradient = (H1-H2) / AverageGrayValue;
 			 Next++;
