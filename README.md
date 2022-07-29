@@ -1,6 +1,5 @@
 # VideoCube1.6
-VideoCube is a human action detection program, we have successfully implemented on https://ieeexplore.ieee.org/document/6116021.
-It can run action detection steps include constructing train database, tasting data and detecting action.
+VideoCube is a human action detection program, we have successfully implemented on https://ieeexplore.ieee.org/document/6116021. It can run action detection steps include constructing train database, tasting data and detecting action.
 
 # Environment
 * operating system: Windows
