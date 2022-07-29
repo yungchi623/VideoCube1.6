@@ -6,5 +6,8 @@ VideoCube is a human action detection program, we have successfully implemented 
 * IDE: visual studio c++
 * Library: openCV
 
+# Guideline
+* VolumeBasedGHT.cpp: VBGHT feature and vote function.
+
 # Remark
 How to use this program, we can reference 程式說明.docx.
