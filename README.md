@@ -8,6 +8,10 @@ VideoCube is a human action detection program, we have successfully implemented 
 
 # Guideline
 * VolumeBasedGHT.cpp: VBGHT feature and vote function.
+* FrameSequenceToCubes: Compute cubes from frame sequence.
+* VBGHTSimular: Rank of simular and output.
+* SparseMatrix: Record result of VolumeBasedGHT.
+* CountRank: Compute behavior rank and detect motion. 
 
 # Remark
 How to use this program, we can reference 程式說明.docx.
